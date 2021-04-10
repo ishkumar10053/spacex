@@ -17,11 +17,11 @@ Different Screen Layouts :
 
 ![image](https://user-images.githubusercontent.com/82275547/114276886-3d31e380-9a46-11eb-99e1-60cbf8289bfb.png)
 
-![image](https://user-images.githubusercontent.com/82275547/114276932-83874280-9a46-11eb-9ba8-4574560159fc.png)
+![image](https://user-images.githubusercontent.com/82275547/114276893-48850f00-9a46-11eb-99e0-95e097ee1644.png)
 
 2. Desktop View
 
-![image](https://user-images.githubusercontent.com/82275547/114276893-48850f00-9a46-11eb-99e0-95e097ee1644.png)
+![image](https://user-images.githubusercontent.com/82275547/114276932-83874280-9a46-11eb-9ba8-4574560159fc.png)
 
 3. Tablet View
 

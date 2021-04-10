@@ -97,10 +97,13 @@ h1{
 	border: 1px solid #7cba01;
 	color: #000;
 }
-.button:focus,.button:hover{
+.button:hover{
 	background-color: #7cba01;
 	border: 1px solid #7cba01;
 	color: #000;
+	outline: none;
+}
+.button:focus{
 	outline: none;
 }
 .data-single-box{

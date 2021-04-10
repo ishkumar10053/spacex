@@ -106,8 +106,7 @@
             var year = '';
             var launch = '';
             var land = '';
-            var limit = '100';
-			
+            
 			if(urlString.land_success){
                 land = urlString.land_success;
             }
@@ -117,10 +116,7 @@
             if(urlString.launch_success){
                 launch = urlString.launch_success;
             }
-            if(urlString.limit){
-                limit = urlString.limit;
-            }
-			$('.launch-button button').each(function() {
+            $('.launch-button button').each(function() {
 				if($(this).attr('data-value') == urlString.launch_success){
 					$(this).attr('data-select','true');
 					$(this).removeClass('button-not-select');
@@ -141,7 +137,7 @@
 					$(this).addClass('button-select');
 				}
 			});
-            callFunction('load',year,launch,land,limit);
+            callFunction('load',year,launch,land);
         })
 
         function getUrlVars(){
@@ -220,11 +216,12 @@
                     year = '';
                 }
             }
-            callFunction('',year,launch,land,'100');
+            callFunction('',year,launch,land);
         })
 
-        function callFunction(method,year,launch,land,limit){
-            var url = 'https://api.spacexdata.com/v3/launches?limit='+limit;
+		var currentRequest = null;
+        function callFunction(method,year,launch,land){
+            var url = 'https://api.spacexdata.com/v3/launches?limit=100';
             if(year != '' || launch != '' || land != ''){
                 url += '&';
             }
@@ -244,14 +241,21 @@
                 url += 'land_success='+land;
             }
             if(method != 'load'){
-                window.history.pushState("", "", "?"+url.split('?')[1]);
+				if(url.split('?')[1].replace('limit=100','') == ''){
+					window.history.pushState("", "", window.location.href.split("?")[0]);
+				}else{
+					window.history.pushState("", "", "?"+url.split('?')[1].replace('limit=100&',''));
+				}
             }
             $('.inner-result').html('');
-            $.ajax({
+            currentRequest = $.ajax({
                 type:'GET',
                 url:url,
                 beforeSend:function(){
-                    $('.inner-result').html('Loading...');
+                    $('.inner-result').html('<h3 style="text-align: center;margin-top: 50px;">Loading...</h3>');
+					if(currentRequest != null){
+                        currentRequest.abort();
+                    }
                 },
                 success:function(response){
                     var total = response.length;
@@ -262,7 +266,7 @@
                         }
                         $('.inner-result').html(htm);
                     }else{
-                        $('.inner-result').html('No Record Found');
+                        $('.inner-result').html('<h3 style="text-align: center;margin-top: 50px;">No Record Found</h3>');
                     }
                 },
                 error:function(e){

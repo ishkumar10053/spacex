@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>SpaceX</title>
+		<link href="style.css" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<div class="main-section">
+			<div class="section-block">
+				<h1>SpaceX Launch Programs</h1>
+				<div class="filter-main-section">
+					<div class="section">
+						<div class="filter-section">
+							<h2>Filters</h2>
+							<h5 class="filter-title">Launch Year</h5>
+							<div class="section-block year-button" data-mode="year">
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2006" data-select="false">2006</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2007" data-select="false">2007</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2008" data-select="false">2008</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2009" data-select="false">2009</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2010" data-select="false">2010</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2011" data-select="false">2011</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2012" data-select="false">2012</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2013" data-select="false">2013</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2014" data-select="false">2014</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2015" data-select="false">2015</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2016" data-select="false">2016</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2017" data-select="false">2017</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2018" data-select="false">2018</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2019" data-select="false">2019</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="2020" data-select="false">2020</button>
+								</div>
+							</div>
+							<h5 class="filter-title">Successful Launch</h5>
+							<div class="section-block launch-button" data-mode="launch">
+								<div class="button-div">
+									<button class="button button-not-select" data-value="true" data-select="false">True</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="false" data-select="false">False</button>
+								</div>
+							</div>
+							<h5 class="filter-title">Successful Land</h5>
+							<div class="section-block land-button" data-mode="land">
+								<div class="button-div">
+									<button class="button button-not-select" data-value="true" data-select="false">True</button>
+								</div>
+								<div class="button-div">
+									<button class="button button-not-select" data-value="false" data-select="false">False</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="result-main-section">
+					<div class="section">
+						<div class="section-block">
+							<div class="inner-result">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section-block">
+				<div class="footer">
+					<p><b>Developed by : </b>Ish Kumar Sharma</p>
+				</div>
+			</div>
+		</div>
+	</body>
+    <script>
+        $(window).on('load',function(){
+            var urlString = getUrlVars();
+            var year = '';
+            var launch = '';
+            var land = '';
+            var limit = '100';
+			
+			if(urlString.land_success){
+                land = urlString.land_success;
+            }
+            if(urlString.launch_year){
+                year = urlString.launch_year;
+			}
+            if(urlString.launch_success){
+                launch = urlString.launch_success;
+            }
+            if(urlString.limit){
+                limit = urlString.limit;
+            }
+			$('.launch-button button').each(function() {
+				if($(this).attr('data-value') == urlString.launch_success){
+					$(this).attr('data-select','true');
+					$(this).removeClass('button-not-select');
+					$(this).addClass('button-select');
+				}
+			});
+			$('.land-button button').each(function() {
+				if($(this).attr('data-value') == urlString.land_success){
+					$(this).attr('data-select','true');
+					$(this).removeClass('button-not-select');
+					$(this).addClass('button-select');
+				}
+			});
+			$('.year-button button').each(function() {
+				if($(this).attr('data-value') == year){
+					$(this).attr('data-select','true');
+					$(this).removeClass('button-not-select');
+					$(this).addClass('button-select');
+				}
+			});
+            callFunction('load',year,launch,land,limit);
+        })
+
+        function getUrlVars(){
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        $('button').on('click',function(){
+            var year = '';
+            var launch = '';
+            var land = '';
+            var mode = $(this).parent('div').parent('div').attr('data-mode');
+			var value = $(this).attr('data-value');
+            if(mode == 'year'){
+                year = value;
+                $('.launch-button button').each(function() {
+                    if($(this).attr('data-select') == 'true'){
+                        launch = $(this).attr('data-value')
+                    }
+                });
+                $('.land-button button').each(function() {
+                    if($(this).attr('data-select') == 'true'){
+                        land = $(this).attr('data-value')
+                    }
+                });
+            }
+            if(mode == 'launch'){
+                launch = value;
+                $('.year-button button').each(function() {
+                    if($(this).attr('data-select') == 'true'){
+                        year = $(this).attr('data-value')
+                    }
+                });
+                $('.land-button button').each(function() {
+                    if($(this).attr('data-select') == 'true'){
+                        land = $(this).attr('data-value')
+                    }
+                });
+            }
+            if(mode == 'land'){
+                land = value;
+                $('.launch-button button').each(function() {
+                    if($(this).attr('data-select') == 'true'){
+                        launch = $(this).attr('data-value')
+                    }
+                });
+                $('.year-button button').each(function() {
+                    if($(this).attr('data-select') == 'true'){
+                        year = $(this).attr('data-value')
+                    }
+                });
+            }
+            var isSelect = $(this).attr('data-select');
+            $(this).parent('div').parent('div').children('div').children('button').attr('data-select','false');
+			$(this).parent('div').parent('div').children('div').children('button').removeClass('button-select');
+			$(this).parent('div').parent('div').children('div').children('button').addClass('button-not-select');
+            if(isSelect == 'false'){
+                $(this).attr('data-select','true');
+                $(this).removeClass('button-not-select');
+                $(this).addClass('button-select');
+            }else{
+                $(this).removeClass('button-select');
+                $(this).addClass('button-not-select');
+                $(this).attr('data-select','false');
+                if(mode == 'launch'){
+                    launch = '';
+                }else if(mode == 'land'){
+                    land = '';
+                }else if(mode == 'year'){
+                    year = '';
+                }
+            }
+            callFunction('',year,launch,land,'100');
+        })
+
+        function callFunction(method,year,launch,land,limit){
+            var url = 'https://api.spacexdata.com/v3/launches?limit='+limit;
+            if(year != '' || launch != '' || land != ''){
+                url += '&';
+            }
+            if(year != ''){
+                url += 'launch_year='+year;
+                if(launch != '' || land != ''){
+                    url += '&';
+                }
+            }
+            if(launch != ''){
+                url += 'launch_success='+launch;
+                if(land != ''){
+                    url += '&';
+                }
+            }
+            if(land != ''){
+                url += 'land_success='+land;
+            }
+            if(method != 'load'){
+                window.history.pushState("", "", "?"+url.split('?')[1]);
+            }
+            $('.inner-result').html('');
+            $.ajax({
+                type:'GET',
+                url:url,
+                beforeSend:function(){
+                    $('.inner-result').html('Loading...');
+                },
+                success:function(response){
+                    var total = response.length;
+                    if(total > 0){
+                        htm = '';
+                        for(var i=0;i<total;i++){
+                            htm += '<div class="inner-result-single-div"><div class="data-single-box"><div class="image-section"><img alt="'+response[i].mission_name+'" title="'+response[i].mission_name+'" src="'+response[i].links.mission_patch+'"></div><h3>'+response[i].mission_name+' #'+(i+1)+'</h3><p><b>Mission Ids : </b>'+response[i].mission_id+'</p><p><b>Launch Year : </b>'+response[i].launch_year+'</p><p><b>Successful Launch : </b>'+response[i].launch_success+'</p><p><b>Successful Landing : </b>'+response[i].rocket.first_stage.cores[0].land_success+'</p></div><div class="clearfix"></div></div>';
+                        }
+                        $('.inner-result').html(htm);
+                    }else{
+                        $('.inner-result').html('No Record Found');
+                    }
+                },
+                error:function(e){
+                    $('.inner-result').html('Try Again!');
+                }
+            })
+        }
+    </script>
+</html>
